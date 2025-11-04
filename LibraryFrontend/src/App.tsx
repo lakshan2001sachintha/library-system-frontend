@@ -1,9 +1,29 @@
-export default function App() {
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Intro from "./pages/Intro";
+import { Toaster } from 'react-hot-toast';
+
+function App() {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-600">
-        Hello Tailwind 3.4.12 + React + TS!
-      </h1>
-    </div>
-  )
+    <>
+      <Toaster position="top-left" reverseOrder={false} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Intro/>}/>
+          <Route path="/home" 
+              element={
+              <div className="min-h-screen bg-gray-100 p-4">
+                <h1 className="text-3xl font-bold text-center mb-6">
+                  📚 Library Management System
+                </h1>
+                <Home />
+              </div>
+              }
+          />  
+          </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
+
+export default App;
