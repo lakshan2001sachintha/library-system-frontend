@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Book } from "../types"; 
-import toast from "react-hot-toast";
+import type { Book } from "../types";
 
 interface Props {
   onSubmit: (book: Book) => void;
@@ -10,6 +9,7 @@ interface Props {
 
 export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
 
+
   // initialize form state for book details
   const [book, setBook] = useState<Book>({
     title: "",
@@ -17,6 +17,7 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
     isbn: "",
     category: "",
   });
+
 
   // initialize form with selected book details
   useEffect(() => {
@@ -32,17 +33,17 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
     }));
   };
 
+
   // validate and submit form data to parent components
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!book.title || !book.author || !book.isbn) {
-      toast.error("All fields are required!");
+    if (!book.title || !book.author) {
       return;
     }
     onSubmit(book); // pass book data to parent component
-      toast.success(selectedBook ? "Book updated successfully!" : "Book added successfully!");
     setBook({ title: "", author: "", isbn: "", category: "" });
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="p-4 bg-white shadow rounded-lg space-y-4">

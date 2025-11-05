@@ -6,6 +6,7 @@ import { getBooks, createBook, updateBook, deleteBook } from "../api/booksApi";
 
 import BookForm from "../components/BookForm";
 import BookList from "../components/BookList";
+import toast from "react-hot-toast";
 
 export default function Home() {
 
@@ -32,22 +33,30 @@ export default function Home() {
 
   // function to handle both adding a new book and updating a book
   const handleAddOrUpdate = async (book: Book) => {
-    if (editingBook && editingBook.id) {
+    
+    try{
+      
+        if (editingBook && editingBook.id) {
 
-      // update a existing book
-      await updateBook(editingBook.id, book);
-   
-    } else {
+          // update a existing book
+         await updateBook(editingBook.id, book);
+         toast.success("Book updated successfully!");
+        } else {
 
-      // create a new book
-      await createBook(book);
+          // create a new book
+          await createBook(book);
+          toast.success("Book added successfully!");
+        }
+
+        // reset the edit state and refresh book list
+        setEditingBook(null);
+        fetchBooks();
+
+        setShowForm(false); // colse the form on mobile
+    
+     }catch(err : any){
+      toast.error(err.message);
     }
-
-    // reset the edit state and refresh book list
-    setEditingBook(null);
-    fetchBooks();
-
-    setShowForm(false); // colse the form on mobile
   };
 
 
@@ -60,10 +69,11 @@ export default function Home() {
     }
   };
 
+
   // Filter the books
   const filterBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchBook.toLowerCase())
-);
+  );
 
   return (
     <div className="max-w-6xl mx-auto mt-10 h-[80vh] flex flex-col md:flex-row gap-6">
