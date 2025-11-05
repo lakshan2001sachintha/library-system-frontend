@@ -14,12 +14,20 @@ export default function Intro() {
           Library<span className="bg-linear-to-r from-indigo-400 to-indigo-600 bg-clip-text text-transparent">MRSL</span>
         </h1>
 
-        <button
-          onClick={() => navigate('/home')}
-          className="bg-indigo-100 hover:bg-indigo-200 text-indigo-900 px-5 py-2 rounded-full font-medium transition duration-200"
-        >
-          Get Started
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate('/login')}
+            className="bg-white hover:bg-indigo-50 text-indigo-900 border border-indigo-200 px-5 py-2 rounded-full font-medium transition duration-200"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => navigate('/signup')}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full font-medium transition duration-200"
+          >
+            Sign Up
+          </button>
+        </div>
 
       </nav>
 
