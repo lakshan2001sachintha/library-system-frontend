@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Book } from "../types";
+import toast from "react-hot-toast";
 
 interface Props {
   onSubmit: (book: Book) => void;
@@ -37,16 +38,22 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
   // validate and submit form data to parent components
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!book.title || !book.author) {
+    if (!book.title.trim()) {
+      toast.error("Title is required !");
       return;
     }
+    if(!book.author.trim()){
+      toast.error("Author is required !");
+      return;
+    }
+
     onSubmit(book); // pass book data to parent component
     setBook({ title: "", author: "", isbn: "", category: "" });
   };
 
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-white shadow rounded-lg space-y-4">
+    <form onSubmit={handleSubmit} className="p-4 bg-white shadow-2xl rounded-lg space-y-4">
       <h2 className="text-xl font-semibold">{selectedBook ? "Edit Book" : "Add New Book"}</h2>
 
       {/* input and selected fields to get book data */}
@@ -57,6 +64,7 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
         onChange={handleChange}
         placeholder="Book Title"
         className="border p-2 rounded w-full"
+        maxLength={50}
       />
 
       <input
@@ -65,6 +73,7 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
         onChange={handleChange}
         placeholder="Book Author"
         className="border p-2 rounded w-full"
+        maxLength={50}
       />
 
       <input
@@ -95,7 +104,7 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-indigo-700 hover:bg-indigo-600 text-white font-semibold px-8 py-1.5 rounded-full transition duration-200 shadow-lg hover:shadow-xl"
         >
         {selectedBook ? "Update" : "Add"}
         </button>
@@ -105,7 +114,7 @@ export default function BookForm({ onSubmit, selectedBook, onCancel }: Props) {
           <button
             type="button"
             onClick={onCancel}
-            className="bg-gray-300 text-black px-4 py-2 rounded"
+            className="bg-gray-300 text-black font-semibold px-8 py-1.5 rounded-full transition duration-200 shadow-lg hover:shadow-xl"
           >
             Cancel
           </button>

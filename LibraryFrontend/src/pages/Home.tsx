@@ -25,7 +25,7 @@ export default function Home() {
     setBooks(data);
   };
 
-   
+  // Run fetchBooks() 
   useEffect(() => {
     fetchBooks();
   }, []);
@@ -78,51 +78,57 @@ export default function Home() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto mt-10 h-[80vh] flex flex-col md:flex-row gap-6">
-    <div className="w-full md:w-1/3 flex flex-col gap-4">
-      <div className="items-center gap-2">
-          {/* Search book */}
-          <input
-            type="text"
-            placeholder="Search Books"
-            value = {searchBook}
-            onChange={(e) => setSearchBook(e.target.value)}
-            className="bg-white shadow p-3 w-full mb-8"
-          />
 
-          {/* Add book button only mobile */}
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="md:hidden bg-blue-500 text-white font-bold px-2 py-1 rounded shadow"
-          >
-            {showForm ? "Close Form" : "Add Book"}
-          </button>
+    <div className="min-h-screen p-4 bg-indigo-50">
+      <h1 className="text-4xl text-shadow-2xs text-indigo-600 font-bold text-center mb-6">
+        Library System
+      </h1>
+      <div className="max-w-6xl mx-auto mt-10 h-[80vh] flex flex-col md:flex-row gap-6">
+        <div className="w-full md:w-1/3 flex flex-col gap-4">
+          <div className="items-center gap-2">
+              {/* Search book */}
+              <input
+                type="text"
+                placeholder="Search Books"
+                value = {searchBook}
+                onChange={(e) => setSearchBook(e.target.value)}
+                className="bg-white shadow-xl rounded-md p-3 w-full mb-8"
+              />
+
+              {/* Add book button only mobile */}
+              <button
+                onClick={() => setShowForm(!showForm)}
+                className="md:hidden bg-indigo-400 hover:bg-gray-400 text-white font-semibold px-5 py-1.5 rounded-full transition duration-200 shadow-lg hover:shadow-xl"
+              >
+                {showForm ? "Close Form" : "Add Book"}
+              </button>
+          </div>
+
+          {/* Bookform fo Add and Update books */}
+          <div className={`${showForm ? "block" : "hidden"} md:block`}>
+                <BookForm
+                onSubmit={handleAddOrUpdate}
+                selectedBook={editingBook}
+                onCancel={() => {
+                  setEditingBook(null);
+                  setShowForm(false)
+                }}
+            />
+          </div>  
+        </div>
+
+        {/* Right Side Block */}
+        <div className="w-full md:w-2/3 h-full overflow-y-auto border-t md:border-t-0 md:border-l border-gray-200 pt-4 md:pt-0 md:pl-4">
+            <BookList
+                books={filterBooks}
+                onEdit={book => {
+                  setEditingBook(book);
+                  setShowForm(true);
+                }}
+                onDelete={handleDelete}
+            />
+        </div>
       </div>
-
-      {/* Bookform fo Add and Update books */}
-      <div className={`${showForm ? "block" : "hidden"} md:block`}>
-            <BookForm
-            onSubmit={handleAddOrUpdate}
-            selectedBook={editingBook}
-            onCancel={() => {
-              setEditingBook(null);
-              setShowForm(false)
-            }}
-        />
-      </div>  
-    </div>
-
-    {/* Right Side Block */}
-    <div className="w-full md:w-2/3 h-full overflow-y-auto border-t md:border-t-0 md:border-l border-gray-200 pt-4 md:pt-0 md:pl-4">
-        <BookList
-            books={filterBooks}
-            onEdit={book => {
-              setEditingBook(book);
-              setShowForm(true);
-            }}
-            onDelete={handleDelete}
-        />
-    </div>
     </div>
   );
 }

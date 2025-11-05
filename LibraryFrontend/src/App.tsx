@@ -13,16 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Intro/>}/>
-          <Route path="/home" 
-              element={
-              <div className="min-h-screen bg-gray-100 p-4">
-                <h1 className="text-3xl font-bold text-center mb-6">
-                   Library Management System
-                </h1>
-                <Home />
-              </div>
-              }
-          />  
+          <Route path="/home" element={<Home/>} />  
           </Routes>
       </BrowserRouter>
     </>
