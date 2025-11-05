@@ -10,7 +10,10 @@ export default function Intro(){
     return (
         <div className="bg-indigo-950 min-h-screen flex items-center justify-center p-4">
          <div className="flex flex-col items-center justify-center space-y-8 text-center">
-
+            
+            <h1 className='text-white text-6xl font-light'>
+                Library Management System
+            </h1>
             <div>
                 <img src={book} className='animate-float'/>
             </div>

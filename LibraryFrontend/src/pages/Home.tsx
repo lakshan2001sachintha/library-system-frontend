@@ -63,7 +63,9 @@ export default function Home() {
   // function to handle deleting a book
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this book?")) {
+      
       await deleteBook(id);
+      toast.success("Book deleted successfully!");
 
       fetchBooks();
     }
